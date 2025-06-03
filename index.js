@@ -61,7 +61,16 @@ app.get('/', function (req, res) {
 app.get('/api', function (req, res) {
     return res.send("Fabrikam Bank API");
 })
-  
+  app.get('/test-outbound', async (req, res) => {
+  try {
+    const response = await fetch('https://api.github.com');
+    const data = await response.json();
+    res.send('✅ Success: App was able to reach GitHub');
+  } catch (err) {
+    res.status(500).send('❌ Blocked: Cannot access GitHub (NSG rule working)');
+  }
+});
+
 // ----------------------------------------------
   // Create an account
 router.post('/accounts', (req, res) => {
